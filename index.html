@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ปฏิทินปี 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #202020;
+            color: #f2f2f2;
+        }
+
+        .calendar-row {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .month-container {
+            width: 24%;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #474747;
+            text-align: center;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #333333;
+        }
+
+        .holiday {
+            background-color: #262d44;
+            font-size: 12px;
+        }
+
+        .month {
+            text-align: center;
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 3px;
+            color: #a5a2a2;
+        }
+
+        .today {
+            background-color: #91674bee;
+            color: #fdfdfd;
+        }
+
+        .mintoday {
+            /*background-color: #464442ee;*/
+            color: #a5a2a2;
+        }
+
+        .day_off {
+            background-color: #273241;
+
+        }
+
+        .day_off_s {
+            background-color: #1d2027;
+            color: #8f8e8e;
+
+        }
+
+        .hread {
+            display: flex;
+            align-items: center;
+        }
+        #year-select{
+            background-color: #1d2027;
+            color: #f2f2f2;
+            width: 200px;
+            font-size: 15px;
+            padding-left: 5px;
+            border: 1px solid #d3d3d3;
+            border-radius: 5px ;
+            padding: 5px;
+        }
+        .box2{
+            margin-left: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="conten">
+        <div class="hread">
+            <div>
+                <h1>ปฏิทิน Calendar</h1>
+            </div>
+            <div class="box2">
+
+            <select name="year" id="year-select" onchange="handleYearChange(event)">
+                <option value="">Select Year</option>
+                <!-- Generate Years Dynamically -->
+               
+            </select>
+            </div>
+        </div>
+        <div id="calendar"></div>
+    </div>
+
+
+    <script>
+        const holidays = [
+            { date: '2024-12-31', name: 'วันสิ้นปี' },
+            { date: '2025-01-01', name: 'วันปีใหม่' },
+            { date: '2025-02-12', name: 'วันมาฆบูชา' },
+            { date: '2025-04-07', name: 'วันทดแทนวันจักรี' },
+            { date: '2025-04-14', name: 'วันสงกรานต์' },
+            { date: '2025-04-15', name: 'วันสงกรานต์' },
+            { date: '2025-04-16', name: 'วันสงกรานต์' },
+            { date: '2025-05-01', name: 'วันแรงงานแห่งชาติ' },
+            { date: '2025-05-05', name: 'วันทดแทนวันฉัตรมงคล' },
+            { date: '2025-05-12', name: 'วันทดแทนวันวิสาขบูชา' },
+            { date: '2025-07-28', name: 'วันเฉลิมพระชนมพรรษาในหลวงรัชกาลที่ 10' },
+            { date: '2025-08-12', name: 'วันแม่แห่งชาติ' },
+            { date: '2025-10-13', name: 'วันคล้ายวันพระบรมราชสมภพในหลวงรัชกาลที่ 9' },
+            { date: '2025-12-05', name: 'วันพ่อแห่งชาติ' },
+            { date: '2025-12-10', name: 'วันรัฐธรรมนูญ' },
+            { date: '2025-12-31', name: 'วันสิ้นปี' }
+        ];
+
+
+        function createCalendar(year) {
+            const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            const months_en = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const months_ens = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            ;
+            const daysOfWeek = ["จ", "อ", "พ", "พฤ", "ศ", "ส", "อา"];
+            const calendarDiv = document.getElementById('calendar');
+
+            // Helper function to create and append an element
+            function createElement(tag, className = '', textContent = '') {
+                const el = document.createElement(tag);
+                if (className) el.className = className;
+                if (textContent) el.textContent = textContent;
+                return el;
+            }
+
+            // Helper function to check if a date is today
+            function isToday(year, month, day) {
+                console.log(year, month, day)
+                const today = new Date();
+                return (
+                    year == today.getFullYear() &&
+                    month == today.getMonth() + 1 &&
+                    day == today.getDate()
+                );
+            }
+            function isMinToday(year, month, day) {
+                const today = new Date();
+
+                if (year <= today.getFullYear()) {
+                    if (month <= today.getMonth() + 1) {
+                      
+                        if (day <= today.getDate()) {
+                            return true
+                        } else {
+                            return false
+                        }
+                    } else {
+                        return false
+                    }
+
+                } else {
+                    return false
+
+                }
+
+
+            }
+            function compareDate(year, month, date) {
+                // Create a Date object
+                const currentDate = new Date(year, month, date);
+                const day = currentDate.getDate(); // Get the day of the month
+
+                // Convert to timestamp
+                const current_timestamp = new Date().getTime();
+                const timestamp = currentDate.getTime();
+                // Check if the day is more or less than the threshold
+
+                if (current_timestamp > timestamp) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            // Create rows of months
+            for (let i = 0; i < 3; i++) { // 3 rows
+                const rowDiv = createElement('div', 'calendar-row');
+
+                for (let j = 0; j < 4; j++) { // 4 months per row
+                    const month = i * 4 + j;
+                    if (month >= 12) break;
+
+                    const monthContainer = createElement('div', 'month-container');
+                    monthContainer.appendChild(createElement('div', 'month', months[month] + ' ' + (parseInt(year)+543)));
+                    monthContainer.appendChild(createElement('div', 'month', months_en[month]+ ' (' +months_ens[month] + ') ' +year ));
+
+                    const table = createElement('table');
+                    const thead = createElement('thead');
+                    const headerRow = createElement('tr');
+
+                    // Add day headers
+                    daysOfWeek.forEach(day => {
+                        console.log('Addin', day);
+                        if (day == 'ส' || day == 'อา') {
+
+                            headerRow.appendChild(createElement('th', 'day_off', day));
+                        } else {
+                            headerRow.appendChild(createElement('th', '', day));
+
+                        }
+                    });
+                    thead.appendChild(headerRow);
+                    table.appendChild(thead);
+
+                    const tbody = createElement('tbody');
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                    let date = 1;
+                    for (let k = 0; k < 6; k++) { // Maximum 6 rows
+                        const row = createElement('tr');
+                        for (let l = 0; l < 7; l++) {
+                            const cell = createElement('td');
+                            if (k === 0 && l < (firstDay === 0 ? 6 : firstDay - 1)) {
+                                // Empty cells before the first day
+                                cell.textContent = '';
+                            } else if (date > daysInMonth) {
+                                // Empty cells after the last day
+                                cell.textContent = '';
+                            } else {
+                                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                                const holiday = holidays.find(h => h.date === dateStr);
+
+                                if (holiday) {
+                                    cell.classList.add('holiday');
+                                    cell.textContent = `${date}\n${holiday.name}`;
+                                } else if (isToday(year, month + 1, date)) {
+                                    cell.classList.add('today');
+                                    cell.textContent = 'to day ' + date;
+                                    //} else if (isMinToday(year, month + 1, date)) {
+                                } else if (compareDate(year, month, date)) {
+                                    compareDate
+                                    cell.classList.add('mintoday');
+                                    cell.textContent = date;
+                                } else if (daysOfWeek[l] == 'ส' || daysOfWeek[l] == 'อา') {
+                                    cell.classList.add('day_off_s');
+                                    cell.textContent = date;
+                                } else {
+                                    cell.textContent = date;
+                                }
+
+                                date++;
+                            }
+                            row.appendChild(cell);
+                        }
+                        tbody.appendChild(row);
+                        if (date > daysInMonth) break;
+                    }
+
+                    table.appendChild(tbody);
+                    monthContainer.appendChild(table);
+                    rowDiv.appendChild(monthContainer);
+                }
+
+                calendarDiv.appendChild(rowDiv);
+            }
+        }
+
+        createCalendar(2025); 
+   
+        const currentYear = 2025;
+        const yearRange = 3; // Range before and after the current year
+        const selectElement = document.getElementById('year-select');
+
+        for (let year = currentYear - yearRange; year <= currentYear + yearRange; year++) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            selectElement.appendChild(option);
+        }
+        function handleYearChange(event) {
+            const selectedYear = event.target.value;
+            if (selectedYear) {
+                const calendarDiv = document.getElementById('calendar');
+                calendarDiv.innerHTML = '';
+                createCalendar(selectedYear);
+            } else {
+                alert("No year selected.");
+            }
+        }
+    </script>
+</body>
+
+</html>
