@@ -21,7 +21,7 @@
         }
 
         .month-container {
-            width: 24%;
+            width: 300px;
             margin-bottom: 20px;
         }
 
@@ -91,6 +91,11 @@
         }
         .box2{
             margin-left: 30px;
+        }
+        #calendar{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
     </style>
 </head>
@@ -276,10 +281,11 @@
 
                     table.appendChild(tbody);
                     monthContainer.appendChild(table);
-                    rowDiv.appendChild(monthContainer);
+                   // rowDiv.appendChild(monthContainer);
+                calendarDiv.appendChild(monthContainer);
+
                 }
 
-                calendarDiv.appendChild(rowDiv);
             }
         }
 
