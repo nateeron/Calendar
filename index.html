@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปฏิทินปี 2025</title>
+    <title>ปฏิทินปี 2026</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -122,7 +122,7 @@
 
 
     <script>
-        const holidays = [
+        const holidays2025 = [
             { date: '2024-12-31', name: 'วันสิ้นปี' },
             { date: '2025-01-01', name: 'วันปีใหม่' },
             { date: '2025-02-12', name: 'วันมาฆบูชา' },
@@ -141,6 +141,35 @@
             { date: '2025-12-31', name: 'วันสิ้นปี' }
         ];
 
+const holidays = [
+  { date: '2026-01-01', name: 'วันขึ้นปีใหม่' },
+
+  { date: '2026-01-02', name: 'วันหยุดชดเชยวันขึ้นปีใหม่' },
+
+  { date: '2026-04-06', name: 'วันจักรี' },
+
+  { date: '2026-04-13', name: 'วันสงกรานต์' },
+  { date: '2026-04-14', name: 'วันสงกรานต์' },
+  { date: '2026-04-15', name: 'วันสงกรานต์' },
+
+  { date: '2026-05-01', name: 'วันแรงงานแห่งชาติ' },
+
+  { date: '2026-05-04', name: 'วันฉัตรมงคล' },
+
+  { date: '2026-06-01', name: 'วันวิสาขบูชา' },
+
+  { date: '2026-07-28', name: 'วันเฉลิมพระชนมพรรษาในหลวง ร.10' },
+
+  { date: '2026-08-12', name: 'วันแม่แห่งชาติ' },
+
+  { date: '2026-10-13', name: 'วันคล้ายวันสวรรคต ร.9' },
+
+  { date: '2026-10-23', name: 'วันปิยมหาราช' },
+
+  { date: '2026-12-07', name: 'วันหยุดชดเชยวันพ่อแห่งชาติ' },
+
+  { date: '2026-12-31', name: 'วันสิ้นปี' }
+];
 
         function createCalendar(year) {
             const months = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
@@ -291,9 +320,9 @@
             }
         }
 
-        createCalendar(2025); 
+        createCalendar(2026); 
    
-        const currentYear = 2025;
+        const currentYear = 2026;
         const yearRange = 3; // Range before and after the current year
         const selectElement = document.getElementById('year-select');
 
